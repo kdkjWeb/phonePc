@@ -113,7 +113,6 @@
     height:100%;
     color:#717171;
     font-size:14px;
-    /*margin-top:20px;*/
     display: flex;
     flex-direction: column;
   }

@@ -30,6 +30,9 @@ export default {
     //   console.log(`当前页: ${val}`);
     // }
     newCreate(){
+      this.$router.push({
+        path:"/newCreate"
+      });
       // this.detail={title:'新建',date:'',content:''};
     }
   },

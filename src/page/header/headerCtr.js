@@ -26,6 +26,29 @@ export default {
   methods:{
     bar(index){
       this.thisIndex = index;
+      switch (index) {
+        case 0:
+          this.$router.push({
+            path:"/doc"
+          });
+              break;
+        case 1:
+          this.$router.push({
+            path:"/information"
+          });
+          break;
+        case 2:
+          this.$router.push({
+            path:"/history"
+          });
+          break;
+        case 3:
+          this.$router.push({
+            path:"/"
+          });
+          break;
+      }
+
     }
   }
 }

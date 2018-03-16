@@ -50,11 +50,11 @@
     flex-direction: row;
   }
   .htext {
-    width:280px;
+    width:200px;
     text-align: center;
   }
   .leftC {
-    width:280px;
+    width:200px;
     height:100%;
     background-color: #252d3a;
   }
@@ -106,5 +106,6 @@
     background-color: #e7ebee;
     display: flex;
     flex-direction: row;
+    position:relative;
   }
 </style>

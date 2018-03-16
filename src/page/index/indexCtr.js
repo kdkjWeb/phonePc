@@ -21,7 +21,7 @@ export default {
 
       setTimeout(()=>{
         this.$router.push({
-          path: '/document',
+          path: '/doc',
         });
       },500);
     }

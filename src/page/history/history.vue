@@ -1,37 +1,36 @@
 <template>
-  <div class="history">  
+  <div>
       <div class="left">
-      <el-table class="table"
-        ref="singleTable"
-        :data="tableData"
-        border
-        highlight-current-row
-        height="height"
-        style="width: 100%">
-        <el-table-column
-          property="title"
-          label="标题">
-        </el-table-column>
-        <el-table-column
-          property="date"
-          label="发布日期">
-        </el-table-column>
-        <el-table-column
-          property="member"
-          label="发送人员">
-        </el-table-column>
-      </el-table> 
-      <div class="pagation">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage1"
-          :page-size="pageSize"
-          layout="total, prev, pager, next"
-          :total="total">
-        </el-pagination>
-
-      </div>
+          <el-table class="table"
+                    ref="singleTable"
+                    :data="tableData"
+                    border
+                    highlight-current-row
+                    height="height"
+                    style="width: 100%">
+            <el-table-column
+              property="title"
+              label="标题">
+            </el-table-column>
+            <el-table-column
+              property="date"
+              label="发布日期">
+            </el-table-column>
+            <el-table-column
+              property="member"
+              label="发送人员">
+            </el-table-column>
+          </el-table>
+          <div class="pagation">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage1"
+              :page-size="pageSize"
+              layout="total, prev, pager, next"
+              :total="total">
+            </el-pagination>
+        </div>
 
     </div>
   </div>
@@ -45,9 +44,9 @@ export {default} from './historyCtr.js'
 
 <style>
   .left {
-    flex: 6;
+    flex: 1;
+    width:100px;
     height:100%;
-    margin-right:20px;
     box-sizing: border-box;
     padding:20px;
     background-color: white;

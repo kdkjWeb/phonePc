@@ -29,7 +29,7 @@
           property="phone"
           label="手机号">
         </el-table-column>
-      </el-table> 
+      </el-table>
       <div class="pagation">
         <el-pagination
           @size-change="handleSizeChange"
@@ -77,7 +77,7 @@
        </div>
       </div>
 
-      <!-- 修改密码 --> 
+      <!-- 修改密码 -->
       <div class="password">
           <div class="title">管理员修改密码</div>
           <div class="pas_con">
@@ -173,6 +173,7 @@
       text-align: center;
       color: #7883ff;
       padding: 20px;
+      font-size: 16px;
   }
   .info_con,.pas_con{
       width: 60%;

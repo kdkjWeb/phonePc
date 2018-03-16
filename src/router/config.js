@@ -5,6 +5,8 @@
 import index from '@/page/index/index'
 import header from '@/page/header/header'
 import doc from '@/page/doc/doc'
+import history from '@/page/history/history'
+import newCreate from '@/page/newCreate/newCreate'
 
 export default [
   {
@@ -21,6 +23,14 @@ export default [
         path:'/doc',
         name:'doc',
         component:doc
+      },{
+        path: '/history',
+        name: 'history',
+        component: history
+      },{
+        path: '/newCreate',
+        name: 'newCreate',
+        component: newCreate
       }
     ]
   }

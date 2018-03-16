@@ -1,44 +1,6 @@
 <template>
   <div>
-    <div class="left">
-      <div class="btnGroup">
-        <button class="new" @click="newCreate()">新建</button>
-        <button class="remove">删除</button>
-        <button class="send" @click="sendMessage()">发送消息</button>
-      </div>
-      <el-table class="table"
-                ref="singleTable"
-                :data="tableData"
-                border
-                highlight-current-row
-                @current-change="handleCurrentChange"
-                height="250"
-                style="width: 100%">
-
-        <el-table-column
-          property="title"
-          label="标题">
-        </el-table-column>
-        <el-table-column
-          property="date"
-          label="发布日期">
-        </el-table-column>
-      </el-table>
-      <div class="pagation">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage1"
-          :page-size="pageSize"
-          layout="total, prev, pager, next"
-          :total="total">
-        </el-pagination>
-
-      </div>
-
-    </div>
-    <div class="right">
-      <div class="default">
+    <div class="default">
         <div class="title">
           <h3>新建</h3>
         </div>
@@ -57,7 +19,6 @@
           </div>
         </div>
       </div>
-    </div>
     <div class="alert" v-if="alert">
       <div class="alertBox">
         <i class="iconfont icon-cuo" @click="closeLayer"></i>
@@ -141,163 +102,12 @@
         </div>
       </div>
     </div>
-
-
-    <div class="alert" v-if="alert1">
-      <div class="alertBox">
-        <i class="iconfont icon-cuo" @click="closeLayer"></i>
-        <h3>发布公告</h3>
-        <div class="tableBox">
-          <div class="flex1">
-            <p>人员</p>
-            <div class="flex1Header">
-              <div class="inputRow">
-                <div class="input">
-                  <i class="iconfont icon-search_icon"></i>
-                  <input type="text" placeholder="请输入搜索信息">
-                </div>
-                <button class="search">查询</button>
-              </div>
-              <div class="radio">
-                <el-radio v-model="radio" label="1">部门</el-radio>
-                <el-radio v-model="radio" label="2">姓名</el-radio>
-                <el-radio v-model="radio" label="3">电话</el-radio>
-              </div>
-            </div>
-            <div class="flex1Table">
-              <el-table class="leftBox"
-                        ref="singleTable"
-                        :data="tableData"
-                        border
-                        highlight-current-row
-                        @current-change="handleCurrentChange"
-                        height="100%"
-                        style="width: 100%">
-
-                <el-table-column
-                  property="title"
-                  label="标题">
-                </el-table-column>
-                <el-table-column
-                  property="date"
-                  label="发布日期">
-                </el-table-column>
-              </el-table>
-            </div>
-
-          </div>
-          <div class="flex2">
-            <div>
-              <button>添加 <i class="iconfont icon-xiangyou"></i></button>
-            </div>
-            <div>
-              <button><i class="iconfont icon-arrow-left"></i> 移除</button>
-            </div>
-          </div>
-          <div class="flex1">
-            <p>添加人员</p>
-            <div class="flex1Header">
-              <div class="inputRow">
-                <button class="add">添加号码</button>
-                <div class="input">
-                  <i class="iconfont icon-search_icon"></i>
-                  <input type="text" placeholder="输入手机号">
-                </div>
-                <button class="sendM">发送消息</button>
-                </div>
-            </div>
-            <div class="flex1Table">
-              <el-table class="leftBox"
-                        ref="singleTable"
-                        :data="tableData"
-                        border
-                        highlight-current-row
-                        @current-change="handleCurrentChange"
-                        height="100%"
-                        style="width: 100%">
-
-                <el-table-column
-                  property="title"
-                  label="标题">
-                </el-table-column>
-                <el-table-column
-                  property="date"
-                  label="发布日期">
-                </el-table-column>
-              </el-table>
-            </div>
-            <div class="flex1Message">
-              <p>消息</p>
-              <span>{{textV.length}}/{{textVCount}}</span>
-              <textarea name="" id="" v-model="textV" :maxlength="textVCount" @input="textValue">
-              </textarea>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 <script>
   export default require('./newCreateCtr');
 </script>
 <style scoped>
-  .left {
-    flex: 6;
-    height:100%;
-    margin-right:20px;
-    box-sizing: border-box;
-    padding:20px;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-  }
-  .btnGroup {
-    width:80%;
-    margin:0 auto;
-    display: flex;
-    justify-content: space-between;
-  }
-  .btnGroup button {
-    width:100px;
-    height:35px;
-    color:white;
-    text-align: center;
-    line-height:35px;
-    border-radius: 35px;
-    outline: none;
-    border:none;
-    cursor: pointer;
-  }
-  .new {
-    background-color: #4768f3;
-  }
-  .remove{
-    background-color: #f29150;
-  }
-  .send {
-    background-color: #f2446d;
-  }
-  .table {
-    border-radius: 10px 10px 0 0;
-    margin-top:20px;
-  }
-  .pagation {
-    width:100%;
-    text-align: center;
-    padding:30px 0;
-    border:1px solid #ebeef5;
-    border-radius:0 0 10px 10px;
-    box-sizing: border-box;
-  }
-  .right {
-    flex: 5;
-    height:100%;
-    box-sizing: border-box;
-    padding:20px;
-    background-color: white;
-  }
   .default {
     width:100%;
     height:100%;

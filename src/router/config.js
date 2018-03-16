@@ -8,6 +8,7 @@ import doc from '@/page/doc/doc'
 import history from '@/page/history/history'
 import newCreate from '@/page/newCreate/newCreate'
 import information from '@/page/information/information'
+import showDoc from '@/page/showDoc/showDoc'
 
 export default [
   {
@@ -23,15 +24,21 @@ export default [
       {
         path:'/doc',
         name:'doc',
-        component:doc
+        component:doc,
+        redirect:"/showDoc",
+        children:[{
+          path:'/showDoc',
+          name:'showDoc',
+          component:showDoc
+        },{
+          path:'/newCreate',
+          name:'newCreate',
+          component:newCreate
+        }]
       },{
         path: '/history',
         name: 'history',
         component: history
-      },{
-        path: '/newCreate',
-        name: 'newCreate',
-        component: newCreate
       },{
         path: '/information',
         name: 'information',

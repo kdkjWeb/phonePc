@@ -4,10 +4,67 @@
 export default {
   data(){
     return {
+      radio: '1',
       currentPage1: 1,
       pageSize:2,
       total:10,
+      alert:false,
+      alert1:false,
+      textVCount:100,
+      textV:'',
+      dis:false,
       tableData: [{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
+        date: '2016-05-03',
+        title: '上海市普陀区金沙江路 1518 弄'
+      },{
         date: '2016-05-03',
         title: '上海市普陀区金沙江路 1518 弄'
       }],
@@ -31,15 +88,25 @@ export default {
     // }
     newCreate(){
       this.$router.push({
-        path:"/newCreate"
+        path:'/newCreate'
       });
       // this.detail={title:'新建',date:'',content:''};
+    },
+    sendPeople(){
+      this.alert1 = true;
+    },
+    closeLayer(){
+      this.alert = false;
+      this.alert1 = false;
+    },
+    sendMessage(){
+      this.alert1 = true;
+    },
+    textValue(){
+
     }
   },
   mounted() {
-    var len = this.$refs.contentBox.querySelectorAll("img");
-    len.forEach((e)=>{
-      e.style.width="100%";
-    });
+
   },
 }

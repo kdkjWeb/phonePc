@@ -7,6 +7,7 @@ import header from '@/page/header/header'
 import doc from '@/page/doc/doc'
 import history from '@/page/history/history'
 import newCreate from '@/page/newCreate/newCreate'
+import information from '@/page/information/information'
 
 export default [
   {
@@ -31,6 +32,10 @@ export default [
         path: '/newCreate',
         name: 'newCreate',
         component: newCreate
+      },{
+        path: '/information',
+        name: 'information',
+        component: information
       }
     ]
   }

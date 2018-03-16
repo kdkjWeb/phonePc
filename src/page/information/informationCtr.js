@@ -22,7 +22,10 @@ export default{
                   value1:'',
                   name: '张三',
                   phone: '15095982630',
-                  password: ''
+                  password: '',
+                  oldPas: '',
+                  newPas: '',
+                  successPas: ''
             },
       
             currentPage1: 1,
@@ -121,5 +124,25 @@ export default{
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`);
           },
+        //用户信息的添加按钮
+        add(){
+            console.log('新增')
+        },
+        //用户信息的保存按钮
+        save(){
+            console.log('保存')
+        },
+        //修改密码的保存按钮
+        save1(){
+            console.log('保存1')
+        },
+        //点击顶部的修改按钮
+        modify(){
+            console.log('修改')
+        },
+        //点击顶部的删除按钮
+        remove(){
+            console.log('删除')
+        }
     }
 }

@@ -2,8 +2,8 @@
   <div>
     <div class="left">
         <div class="btnGroup">
-        <button class="new" @click="newCreate()">修改</button>
-        <button class="remove">删除</button>
+        <button class="new" @click="modify">修改</button>
+        <button class="remove" @click="remove">删除</button>
       </div>
         <el-table class="table"
         ref="singleTable"
@@ -48,26 +48,30 @@
         <div class="title">用户信息</div>
        <div class="info_con">
             <el-form ref="form" label-width="80px">
-                <el-form-item label="部门">
-                    <el-select v-model="form.value" placeholder="请选择部门">
+                <el-form-item label="部门" size="small">
+                    <el-select v-model="form.value" placeholder="请选择部门" class="input">
                         <el-option v-for="item in form.options" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="岗位">
-                    <el-select v-model="form.value1" placeholder="请选择岗位">
+                <el-form-item label="岗位" size="small">
+                    <el-select v-model="form.value1" placeholder="请选择岗位" class="input">
                         <el-option v-for="item in form.options" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="姓名"  prop="name">
+                <el-form-item label="姓名"  prop="name" size="small">
                     <el-input v-model="form.name"></el-input>
                 </el-form-item>
-            <el-form-item label="手机号"  prop="phone">
+            <el-form-item label="手机号"  prop="phone" size="small">
                     <el-input v-model="form.phone"></el-input>
                 </el-form-item>
-                <el-form-item label="密码"  prop="password">
+                <el-form-item label="密码"  prop="password" size="small">
                     <el-input type="password" v-model="form.password"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" size="small" class="btn1" @click="add">新增</el-button>
+                    <el-button size="small" class="btn1" @click="save">保存</el-button>
                 </el-form-item>
             </el-form>
        </div>
@@ -76,6 +80,22 @@
       <!-- 修改密码 --> 
       <div class="password">
           <div class="title">管理员修改密码</div>
+          <div class="pas_con">
+              <el-form ref="form" label-width="80px">
+                    <el-form-item label="原密码"  prop="password" size="small">
+                        <el-input type="password" v-model="form.oldPas"></el-input>
+                    </el-form-item>
+                    <el-form-item label="新密码"  prop="password" size="small">
+                        <el-input type="password" v-model="form.newPas"></el-input>
+                    </el-form-item>
+                    <el-form-item label="确认密码"  prop="password" size="small">
+                        <el-input type="password" v-model="form.successPas"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" size="small" class="btn" @click="save1">保存</el-button>
+                    </el-form-item>
+              </el-form>
+          </div>
       </div>
     </div>
   </div>
@@ -137,23 +157,39 @@
     box-sizing: border-box;
   }
   .right .info{
-      height: 55%;
+      height: 53%;
       width: 100%;
       background: #fff;
       margin-bottom: 20px;
+      overflow: auto;
   }
   .right .password{
-      height: 45%;
+      height: calc(47% - 20px);
       width: 100%;
       background: #fff;
+      overflow: auto;
   }
   .title{
       text-align: center;
       color: #7883ff;
       padding: 20px;
   }
-  .info_con{
+  .info_con,.pas_con{
+      width: 60%;
+      margin: 0 auto;
+  }
+  /* .pas_con{
       width: 70%;
       margin: 0 auto;
+  } */
+  .btn{
+      width: 80%;
+      margin-left: calc(10% - 40px);
+  }
+  .input{
+      width: 100%;
+  }
+  .btn1{
+      width: 35%;
   }
 </style>

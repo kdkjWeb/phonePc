@@ -11,10 +11,10 @@ export default {
   methods:{
     login(){
       if(this.name==""||this.pwd=="") {
-        this.$mint.Toast({
+        this.$message({
           message: '请输入用户名或密码',
-          position: 'center',
-          duration: 1500
+          type: 'warning',
+          duration:1500
         });
         return false;
       }
@@ -26,10 +26,10 @@ export default {
         },
         callback:(res)=>{
           //this.$common.setStorage("token",res.data);
-          this.$mint.Toast({
-            message: '登录成功',
-            position: 'bottom',
-            duration: 500
+          this.$message({
+            message: '登录成功,立马跳转页面',
+            type: 'success',
+            duration:500
           });
           setTimeout(()=>{
             this.$router.push({

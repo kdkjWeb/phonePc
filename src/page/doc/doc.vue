@@ -11,24 +11,22 @@
         :data="tableData"
         border
         highlight-current-row
-        @current-change="handleCurrentChange"
+        @current-change="showDoc"
         height="250"
         style="width: 100%">
-
         <el-table-column
           property="title"
           label="标题">
         </el-table-column>
         <el-table-column
-          property="date"
+          property="pubTime"
           label="发布日期">
         </el-table-column>
       </el-table>
       <div class="pagation">
         <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage1"
+          @current-change="currentPagefun"
+          :current-page.sync="currentPage"
           :page-size="pageSize"
           layout="total, prev, pager, next"
           :total="total">
@@ -37,7 +35,10 @@
       </div>
 
     </div>
-    <router-view class="right"></router-view>
+    <div class="right">
+      <router-view class="rightView"></router-view>
+    </div>
+
     <div class="alert" v-if="alert1">
       <div class="alertBox">
         <i class="iconfont icon-cuo" @click="closeLayer"></i>
@@ -192,8 +193,12 @@
     box-sizing: border-box;
     padding:20px;
     background-color: white;
+    position:relative;
   }
-
+  .rightView {
+    width:100%;
+    height:100%;
+  }
   .alert {
     position:absolute;
     top:0;

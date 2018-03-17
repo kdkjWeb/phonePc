@@ -3,7 +3,7 @@
       <div class="default">
         <div class="title">
           <h3>{{detail.title}}</h3>
-          <p>{{detail.date}}</p>
+          <p>{{detail.pubTime}}</p>
         </div>
         <div class="content" >
           <div class="contentBox" ref="contentBox" v-html="detail.content"></div>

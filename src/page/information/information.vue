@@ -18,11 +18,11 @@
           label="部门">
         </el-table-column>
         <el-table-column
-          property="job"
+          property="type"
           label="岗位">
         </el-table-column>
         <el-table-column
-          property="name"
+          property="username"
           label="姓名">
         </el-table-column>
         <el-table-column
@@ -32,9 +32,8 @@
       </el-table>
       <div class="pagation">
         <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage1"
+          @current-change="changeCurrentChange"
+          :current-page.sync="currentPage"
           :page-size="pageSize"
           layout="total, prev, pager, next"
           :total="total">
@@ -47,31 +46,29 @@
       <div class="info">
         <div class="title">用户信息</div>
        <div class="info_con">
-            <el-form ref="form" label-width="80px">
+            <el-form ref="form" label-width="55px">
                 <el-form-item label="部门" size="small">
-                    <el-select v-model="form.value" placeholder="请选择部门" class="input">
-                        <el-option v-for="item in form.options" :key="item.value" :label="item.label" :value="item.value">
+                    <el-select v-model="form.departmentV" :disabled="disable" placeholder="请选择部门" class="input">
+                        <el-option v-for="item in form.department" :key="item.departId" :label="item.departName" :value="item.departId">
                         </el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="岗位" size="small">
-                    <el-select v-model="form.value1" placeholder="请选择岗位" class="input">
-                        <el-option v-for="item in form.options" :key="item.value" :label="item.label" :value="item.value">
+                    <el-select v-model="form.typeV" :disabled="disable" placeholder="请选择岗位" class="input">
+                        <el-option v-for="item in form.type" :key="item.value" :label="item.label" :value="item.value">
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="姓名"  prop="name" size="small">
-                    <el-input v-model="form.name"></el-input>
+                <el-form-item label="姓名" prop="name" size="small">
+                    <el-input placeholder="请输入姓名" :disabled="disable" v-model="form.name"></el-input>
                 </el-form-item>
             <el-form-item label="手机号"  prop="phone" size="small">
-                    <el-input v-model="form.phone"></el-input>
+                    <el-input placeholder="请输入手机号" :disabled="disable" v-model="form.phone"></el-input>
                 </el-form-item>
-                <el-form-item label="密码"  prop="password" size="small">
-                    <el-input type="password" v-model="form.password"></el-input>
-                </el-form-item>
-                <el-form-item>
+                <el-form-item class="groupB">
                     <el-button type="primary" size="small" class="btn1" @click="add">新增</el-button>
                     <el-button size="small" class="btn1" @click="save">保存</el-button>
+                    <el-button type="warning" size="small" class="btn1" @click="">重置密码</el-button>
                 </el-form-item>
             </el-form>
        </div>
@@ -81,7 +78,7 @@
       <div class="password">
           <div class="title">管理员修改密码</div>
           <div class="pas_con">
-              <el-form ref="form" label-width="80px">
+              <el-form ref="form" label-width="70px">
                     <el-form-item label="原密码"  prop="password" size="small">
                         <el-input type="password" v-model="form.oldPas"></el-input>
                     </el-form-item>
@@ -190,7 +187,9 @@
   .input{
       width: 100%;
   }
-  .btn1{
-      width: 35%;
+  .groupB{
+      width:100%;
+      text-align: center;
+      margin-left:-50px;
   }
 </style>

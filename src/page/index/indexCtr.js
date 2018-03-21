@@ -31,6 +31,7 @@ export default {
             type: 'success',
             duration:500
           });
+          localStorage.type = res.data.type;
           setTimeout(()=>{
             this.$router.push({
               path: '/doc',

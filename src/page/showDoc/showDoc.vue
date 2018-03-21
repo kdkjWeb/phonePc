@@ -53,6 +53,7 @@
     overflow:auto;
   }
   .contentBox img {
+    width:100%;
     height:auto;
   }
   .footerBtn {

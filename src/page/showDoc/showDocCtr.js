@@ -34,6 +34,24 @@ export default {
         query:{id:this.queryId}
       });
     },
+    img(){
+      var img = new Image();
+      var len = this.$refs.contentBox.querySelectorAll("img");
+      len.forEach((e)=>{
+        img.src = e.src;
+        var k = setInterval(()=>{
+          if(img.width != 0 ) {
+            if(img.width >= this.wid) {
+              e.style.width = "100%";
+            }else {
+              e.style.width = img.width +"px";
+            }
+            clearInterval(k);
+          }
+        },0);
+
+      });
+    }
   },
   watch:{
     $route(){
@@ -46,17 +64,10 @@ export default {
     this.queryId = this.$route.query.id;
     this.hrefs = this.$baseU;
     this.getDoc();
+    this.img();
   },
   updated(){
-
-    var img = new Image();
-    var len = this.$refs.contentBox.querySelectorAll("img");
-    len.forEach((e)=>{
-      img.src = e.src;
-      if(img.width >= this.wid) {
-        e.style.width = "100%";
-      }
-    });
+    this.img();
   },
   deactivated(){
     this.$destroy();

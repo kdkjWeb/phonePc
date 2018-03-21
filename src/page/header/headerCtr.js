@@ -33,6 +33,14 @@ export default {
           });
               break;
         case 1:
+          if(localStorage.type != 2) {
+            this.$message({
+              message: '你没有该权限',
+              type: 'error',
+              duration:1500
+            });
+            break;
+          }
           this.$router.push({
             path:"/information"
           });

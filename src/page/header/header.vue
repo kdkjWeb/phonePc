@@ -54,7 +54,7 @@
     text-align: center;
   }
   .leftC {
-    width:200px;
+    width:120px;
     height:100%;
     background-color: #252d3a;
   }
@@ -72,16 +72,16 @@
     position:absolute;
     top:0;
     left:0;
-    width:20px;
+    width:10px;
     height:100%;
     background-color: #4768f3;
   }
   .leftList .icon-msnui-triangle-right {
     position:absolute;
-    right:20px;
+    right:5px;
     -webkit-transform: translateY(-50%);
     top:50%;
-    font-size:30px;
+    font-size:25px;
     color:#4768f3;
   }
   .listText {
@@ -91,11 +91,11 @@
     left:45%;
   }
   .listText p:nth-of-type(1) i{
-    font-size:50px;
+    font-size:40px;
     color:white;
   }
   .listText p:nth-of-type(2) {
-    font-size:17px;
+    font-size:15px;
     color:white;
   }
   .router2 {

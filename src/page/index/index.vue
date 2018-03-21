@@ -89,5 +89,10 @@
     margin:0 auto;
     cursor: pointer;
   }
+  input:-webkit-autofill {
+    -webkit-text-fill-color: #fff !important;
+    background-color: rgba(0,0,0,.5) !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
 </style>
 

@@ -110,6 +110,7 @@ export default {
     },
     sendM(){
       var arr = this.selectPData;
+      this.sendArr = [];
       arr.forEach((e,index)=>{
         if(e.id) {
           this.sendArr.push(e.id);
@@ -135,7 +136,11 @@ export default {
         url:"news/addNews",
         params:myForm,
         callback:(res)=>{
-
+          this.$message({
+            message: '发布成功',
+            type: 'success',
+            duration:1500
+          });
         }
       });
     },

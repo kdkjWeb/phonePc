@@ -132,7 +132,7 @@ export default{
        */
       save(){
         console.log(this.form['departmentV'],this.form['name'],this.form['typeV'],this.form['phone'])
-        if(this.form['departmentV']===''||this.form['name']===''||this.form['typeV']===""||this.form['phone'] ==="") {
+        if(this.form['departmentV']===''||this.form['name']===''||this.form['typeV']==="") {
           this.$message({
             message: '请填写完整信息',
             type: 'warning',
@@ -168,6 +168,10 @@ export default{
                 type: 'success',
                 duration:1500
               });
+              this.form['departmentV'] = "";
+              this.form['name'] = "";
+              this.form['typeV'] = "";
+              this.form['phone'] = "";
             }
             this.list();
           }
@@ -264,6 +268,9 @@ export default{
               type: 'success',
               duration:1500
             });
+            this.form.oldPas = "";
+            this.form.newPas = "";
+            this.form.successPas = "";
           }
         });
       }

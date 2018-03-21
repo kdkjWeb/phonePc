@@ -20,6 +20,7 @@
         </el-table-column>
         <el-table-column
           property="pubTime"
+          width="200px"
           label="发布日期">
         </el-table-column>
       </el-table>
@@ -213,7 +214,7 @@
     box-sizing: border-box;
   }
   .right {
-    flex: 5;
+    flex: 6;
     height:100%;
     box-sizing: border-box;
     padding:20px;

@@ -17,8 +17,8 @@ export default {
       textV:'',
       searchV:"",
       allPData:[],
-      selectPD:[],
-      selectPData:[],
+      selectPD:[], //左边列表
+      selectPData:[], //选择人员数组
       removePD:[],
       phoneV:"",
       sendArr:[],
@@ -108,6 +108,14 @@ export default {
      * 打开消息页面
      */
     sendMessage(){
+      if(localStorage.type == 0) {
+        this.$message({
+          message: '你没有权限发送消息',
+          type: 'error',
+          duration:1500
+        });
+       return ;
+      }
       this.alert = true;
       this.allPerson();
     },
@@ -133,7 +141,7 @@ export default {
         });
         return ;
       }
-      this.selectPData = this.selectPD;
+      this.selectPData = JSON.parse(JSON.stringify(this.selectPD));
     },
     /**
      * 添加手机号码

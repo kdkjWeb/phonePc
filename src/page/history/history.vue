@@ -9,23 +9,22 @@
                     height="height"
                     style="width: 100%">
             <el-table-column
-              property="title"
+              property="message"
               label="标题">
             </el-table-column>
             <el-table-column
-              property="date"
+              property="sendDate"
               label="发布日期">
             </el-table-column>
             <el-table-column
-              property="member"
+              property="receiveList"
               label="发送人员">
             </el-table-column>
           </el-table>
           <div class="pagation">
             <el-pagination
-              @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page.sync="currentPage1"
+              :current-page.sync="currentPage"
               :page-size="pageSize"
               layout="total, prev, pager, next"
               :total="total">

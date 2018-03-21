@@ -1,112 +1,230 @@
 /**
  * Created by kdkjPC on 2018/3/15.
  */
+const myForm = new FormData();
 export default {
   data(){
     return {
-      radio: '1',
-      currentPage1: 1,
-      pageSize:2,
-      total:10,
+      queryId:"",
+      title:"",
+      content:"",
+      fileArr:[],
+      editorOption: {
+        modules:{
+          toolbar:[
+            ['bold','italic',"image"],
+            [{'size':['small',false,'large','huge']}],
+            [{'align':[]}],
+            [{'color':[]}]
+          ]
+        },
+        placeholder:'请输入内容......'
+      },
+      radio: 'department',
+      currentPage: 1,  //初始化当前页 为第几页
+      pageSize:null,       //每一页显示的条数
+      total:null,         //分页的总条数
       alert:false,
-      alert1:true,
-      textVCount:100,
-      textV:'',
-      dis:false,
-      tableData: [{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      },{
-        date: '2016-05-03',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }],
-      detail:{
-        title:"80年代的一万元相当于现在多少钱？",
-        date:'2016-05-03',
-        content:'<img src="http://f.hiphotos.baidu.com/image/pic/item/c75c10385343fbf2f7da8133bc7eca8065388f2f.jpg" alt=""><img src="http://f.hiphotos.baidu.com/image/pic/item/c75c10385343fbf2f7da8133bc7eca8065388f2f.jpg" alt="">八十年代的一辆永久牌和飞鸽牌自行车，凭票购买，一辆永久牌自行车不超过时价120元。我家在那时买过一辆这个牌子的自行车。所以，至今还清楚地记得它的价格。如果单从自行车销售价120元计算，那时1元钱，可以买凭票供应的0、65元的鲜猪肉约1斤5两，可以买凭粮票购买的馒头、包子20个，可以看一个感冒发烧之类的小病还有余。那时候的120元，大约相于现在的15000元左右。因为那时候的人均月薪不足四十元，大都三十多元。<br/> <br/> <br/>八十年代的一辆永久牌和飞鸽牌自行车，凭票购买，一辆永久牌自行车不超过时价120元。我家在那时买过一辆这个牌子的自行车。所以，至今还清楚地记得它的价格。如果单从自行车销售价120元计算，那时1元钱，可以买凭票供应的0、65元的鲜猪肉约1斤5两，可以买凭粮票购买的馒头、包子20个，可以看一个感冒发烧之类的小病还有余。那时候的120元，大约相于现在的15000元左右。因为那时候的人均月薪不足四十元，大都三十多元。'
-      }
+      tableData: [],
+      detail:{},
+
+      //  ---------------------message-------------------------
+      searchV:"",
+      allPData:[],
+      selectPD:[],
+      selectPData:[],
+      removePD:[],
+      sendArr:[],
     }
+
   },
   methods:{
-    handleCurrentChange(val) {
-      this.currentRow = val;
-      console.log(val);
+    /**
+     * 查看当前页
+     */
+    currentPagefun(val){
+      this.currentPage = val;
+      this.list();
     },
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
-    // handleCurrentChange(val) {
-    //   console.log(`当前页: ${val}`);
-    // }
-    newCreate(){
-      // this.detail={title:'新建',date:'',content:''};
-    },
-    sendPeople(){
-      this.alert = true;
-    },
+    /**
+     * 关闭弹窗
+     */
     closeLayer(){
       this.alert = false;
-      this.alert1 = false;
     },
+    /**
+     * 打开消息页面
+     */
     sendMessage(){
-      this.alert1 = true;
+      if(this.title == ""||this.content == "") {
+        this.$message({
+          message: '请输入标题和文章内容',
+          type: 'warning',
+          duration:1500
+        });
+        return ;
+      }
+      this.alert = true;
+      this.allPerson();
     },
-    textValue(){
+    /**
+     * 上传附件
+     */
+    upload(e){
+      for(var key in e.currentTarget.files) {
+        if(key == "item"||key == "length") {
+          break;
+        }
+        this.fileArr.push(e.currentTarget.files[key]);
+      }
+    },
+    /**
+     * 删除上传文件
+     */
+    removeFile(index){
+      this.fileArr.splice(index,1);
+    },
+    /*-----------------message-------------------*/
+    /**
+     * 选中当前人员
+     */
+    handleSelectionChange(val) {
+      this.selectPD = val;
+    },
+    removeSelectionChange(val) {
+      this.removePD = val;
+    },
+    /**
+     * 添加到左边
+     */
+    add(){
+      if(this.selectPD.length == 0) {
+        this.$message({
+          message: '请选择人员',
+          type: 'warning',
+          duration:1500
+        });
+        return ;
+      }
+      this.selectPData = this.selectPD;
+    },
+    sendM(){
+      var arr = this.selectPData;
+      arr.forEach((e,index)=>{
+        if(e.id) {
+          this.sendArr.push(e.id);
+        }else {
+          this.sendArr.push(e.phone);
+        }
+      });
+      if(this.sendArr.length == 0) {
+        this.$message({
+          message: '请选择需要发送的人员',
+          type: 'warning',
+          duration:1500
+        });
+        return false;
+      }
+      for(var i=0;i<this.fileArr.length;i++) {
+        myForm.append('receivefiles',this.fileArr[i]);
+      }
+      myForm.append('title',this.title);
+      myForm.append('content',this.content);
+      myForm.append('receivers',this.sendArr);
+      this.$p({
+        url:"news/addNews",
+        params:myForm,
+        callback:(res)=>{
+
+        }
+      });
+    },
+    /**
+     * 删除右边
+     */
+    removeAdd(){
+      var arr = this.removePD;
+      var kArr = this.selectPData;
+      arr.forEach((m,mIndex)=>{
+        kArr.forEach((e,index)=>{
+          if(e.id == m.id) {
+            kArr.splice(index,1);
+          }
+        })
+      });
+      this.selectPData = kArr;
+    },
+    /**
+     *按照需求查询
+     */
+    search(){
+      // if(this.searchV == "") {
+      //   this.$message({
+      //     message: '请输入要查询的内容',
+      //     type: 'warning',
+      //     duration:1500
+      //   });
+      //   return ;
+      // }
+      let m;
+      m = this.radio;
+      this.$p({
+        url:"user/selectMyUser",
+        params:{
+          pageNum:0,
+          [m]:this.searchV
+        },
+        callback:(res)=>{
+          this.allPData = res.data.list;
+          var d = this.allPData;
+          d.forEach((e,index)=>{
+            d[index].typeName = this.typeF(e.type);
+          });
+          this.allPData = d;
+        }
+      });
+    },
+    /**
+     * 将type  转换成汉字
+     * @param val
+     * @returns {*}
+     */
+    typeF(val) {
+      switch(val){
+        case 0:
+          return "普通用户";
+          break;
+        case 1:
+          return "部门管理员";
+          break;
+        case 2:
+          return "管理员";
+          break;
+      }
+    },
+    /**
+     * 获取所有人员列表
+     */
+    allPerson(){
+      this.$p({
+        url:"user/selectMyUser",
+        params:{
+          pageNum:0
+        },
+        callback:(res)=>{
+          this.allPData = res.data.list;
+          var d = this.allPData;
+          d.forEach((e,index)=>{
+            d[index].typeName = this.typeF(e.type);
+          });
+          this.allPData = d;
+        }
+      });
+    },
+    selectPerson(){
 
     }
   },
   mounted() {
-    // var len = this.$refs.contentBox.querySelectorAll("img");
-    // len.forEach((e)=>{
-    //   e.style.width="100%";
-    // });
-  },
+  }
 }

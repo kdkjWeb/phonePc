@@ -4,17 +4,26 @@
 export default {
   data(){
     return {
-      radio: '1',
+      radio: 'department',
       currentPage: 1,  //初始化当前页 为第几页
       pageSize:null,       //每一页显示的条数
       total:null,         //分页的总条数
-      alert1:false,
-      textVCount:100,
-      textV:'',
-      dis:false,
+      alert:false,
       tableData: [],
-      detail:{}
+      detail:{},
+      currentRow:null,
+    //  ---------------------message-------------------------
+      textVCount:70,
+      textV:'',
+      searchV:"",
+      allPData:[],
+      selectPD:[],
+      selectPData:[],
+      removePD:[],
+      phoneV:"",
+      sendArr:[],
     }
+
   },
   methods:{
     /**
@@ -22,10 +31,11 @@ export default {
      * @param val
      */
     showDoc(val) {
-      this.$router.replace({
-        path:'/showDoc',
-        query:{id:val.id}
-      })
+      this.detail = val;
+        this.$router.push({
+          path:'/showDoc',
+          query:{id:val.id}
+        })
     },
     /**
      * 查看当前页
@@ -38,6 +48,7 @@ export default {
      * 跳转新建页面
      */
     newCreate(){
+      this.$refs.singleTable.setCurrentRow("");
       this.$router.push({
         path:'/newCreate'
       });
@@ -59,13 +70,215 @@ export default {
         }
       });
     },
+    /**
+     * 删除文件列表
+     */
+    remove(){
+      var id = this.detail.id;
+      if(id) {
+        this.$g({
+          url:'news/deletNews',
+          params:{
+            newsids:id
+          },
+          callback:(res)=>{
+            this.$message({
+              message: '删除成功',
+              type: 'success',
+              duration:1500
+            });
+            this.list();
+          }
+        });
+      }else {
+        this.$message({
+          message: '请选择要删除的用户',
+          type: 'warning',
+          duration:1500
+        });
+      }
+    },
+    /**
+     * 关闭弹窗
+     */
     closeLayer(){
-      this.alert1 = false;
+      this.alert = false;
     },
+    /**
+     * 打开消息页面
+     */
     sendMessage(){
-      this.alert1 = true;
+      this.alert = true;
+      this.allPerson();
     },
-    textValue(){
+    /*-----------------message-------------------*/
+    /**
+     * 选中当前人员
+     */
+    handleSelectionChange(val) {
+      this.selectPD = val;
+    },
+    removeSelectionChange(val) {
+      this.removePD = val;
+    },
+    /**
+     * 添加到左边
+     */
+    add(){
+      if(this.selectPD.length == 0) {
+        this.$message({
+          message: '请选择人员',
+          type: 'warning',
+          duration:1500
+        });
+        return ;
+      }
+      this.selectPData = this.selectPD;
+    },
+    /**
+     * 添加手机号码
+     */
+    addPhone(){
+      if(this.phoneV.length != 11) {
+        this.$message({
+          message: '请输入正确的电话号码',
+          type: 'warning',
+          duration:1500
+        });
+        return;
+      }
+
+      this.selectPData.unshift({
+        phone:this.phoneV
+      });
+
+    },
+    sendM(){
+      var arr = this.selectPData;
+      arr.forEach((e,index)=>{
+        if(e.id) {
+          this.sendArr.push(e.id);
+        }else {
+          this.sendArr.push(e.phone);
+        }
+      });
+      if(this.sendArr.length == 0) {
+        this.$message({
+          message: '请选择需要发送的人员',
+          type: 'warning',
+          duration:1500
+        });
+        return false;
+      }
+      if(this.textV == "") {
+        this.$message({
+          message: '请输入要发送的内容',
+          type: 'warning',
+          duration:1500
+        });
+        return false;
+      }
+      this.$p({
+        url:"message/sendMessage",
+        params:{
+          message:this.textV,
+          receiveList:this.sendArr.join(",")
+        },
+        callback:(res)=>{
+          this.$message({
+            message: '发送成功',
+            type: 'success',
+            duration:1500
+          });
+          this.sendArr = [];
+        }
+      });
+      console.log(this.sendArr);
+      console.log(this.textV);
+    },
+    /**
+     * 删除右边
+     */
+    removeAdd(){
+      var arr = this.removePD;
+      var kArr = this.selectPData;
+      arr.forEach((m,mIndex)=>{
+        kArr.forEach((e,index)=>{
+          if(e.id == m.id) {
+            kArr.splice(index,1);
+          }
+        })
+      });
+      this.selectPData = kArr;
+    },
+    /**
+     *按照需求查询
+     */
+    search(){
+      // if(this.searchV == "") {
+      //   this.$message({
+      //     message: '请输入要查询的内容',
+      //     type: 'warning',
+      //     duration:1500
+      //   });
+      //   return ;
+      // }
+      let m;
+      m = this.radio;
+      this.$p({
+        url:"user/selectMyUser",
+        params:{
+          pageNum:0,
+          [m]:this.searchV
+        },
+        callback:(res)=>{
+          this.allPData = res.data.list;
+          var d = this.allPData;
+          d.forEach((e,index)=>{
+            d[index].typeName = this.typeF(e.type);
+          });
+          this.allPData = d;
+        }
+      });
+    },
+    /**
+     * 将type  转换成汉字
+     * @param val
+     * @returns {*}
+     */
+    typeF(val) {
+      switch(val){
+        case 0:
+          return "普通用户";
+          break;
+        case 1:
+          return "部门管理员";
+          break;
+        case 2:
+          return "管理员";
+        break;
+      }
+    },
+    /**
+     * 获取所有人员列表
+     */
+    allPerson(){
+      this.$p({
+        url:"user/selectMyUser",
+        params:{
+          pageNum:0
+        },
+        callback:(res)=>{
+          this.allPData = res.data.list;
+          var d = this.allPData;
+          d.forEach((e,index)=>{
+            d[index].typeName = this.typeF(e.type);
+          });
+          this.allPData = d;
+        }
+      });
+    },
+    selectPerson(){
 
     }
   },

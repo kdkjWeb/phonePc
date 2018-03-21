@@ -3,7 +3,7 @@
     <div class="left">
       <div class="btnGroup">
         <button class="new" @click="newCreate()">新建</button>
-        <button class="remove">删除</button>
+        <button class="remove" @click="remove">删除</button>
         <button class="send" @click="sendMessage()">发送消息</button>
       </div>
       <el-table class="table"
@@ -39,10 +39,10 @@
       <router-view class="rightView"></router-view>
     </div>
 
-    <div class="alert" v-if="alert1">
+    <div class="alert" v-if="alert">
       <div class="alertBox">
         <i class="iconfont icon-cuo" @click="closeLayer"></i>
-        <h3>发布公告</h3>
+        <h3>发送消息</h3>
         <div class="tableBox">
           <div class="flex1">
             <p>人员</p>
@@ -50,85 +50,110 @@
               <div class="inputRow">
                 <div class="input">
                   <i class="iconfont icon-search_icon"></i>
-                  <input type="text" placeholder="请输入搜索信息">
+                  <input type="text" v-model="searchV" placeholder="请输入搜索信息">
                 </div>
-                <button class="search">查询</button>
+                <button class="search" @click="search">查询</button>
               </div>
               <div class="radio">
-                <el-radio v-model="radio" label="1">部门</el-radio>
-                <el-radio v-model="radio" label="2">姓名</el-radio>
-                <el-radio v-model="radio" label="3">电话</el-radio>
+                <el-radio v-model="radio" label="department">部门</el-radio>
+                <el-radio v-model="radio" label="username">姓名</el-radio>
+                <el-radio v-model="radio" label="phone">电话</el-radio>
               </div>
             </div>
             <div class="flex1Table">
               <el-table class="leftBox"
-                        ref="singleTable"
-                        :data="tableData"
                         border
-                        highlight-current-row
-                        @current-change="handleCurrentChange"
+                        align="center"
                         height="100%"
-                        style="width: 100%">
-
+                ref="multipleTable"
+                :data="allPData"
+                tooltip-effect="dark"
+                style="width: 100%"
+                @selection-change="handleSelectionChange">
                 <el-table-column
-                  property="title"
-                  label="标题">
+                  type="selection">
                 </el-table-column>
                 <el-table-column
-                  property="date"
-                  label="发布日期">
+                  label="部门">
+                  <template slot-scope="scope">{{ scope.row.department }}</template>
                 </el-table-column>
+                <el-table-column
+                  prop="typeName"
+                  label="岗位">
+                </el-table-column>
+                <el-table-column
+                  prop="username"
+                  label="姓名"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                prop="phone"
+                label="手机号"
+                show-overflow-tooltip>
+              </el-table-column>
               </el-table>
             </div>
 
           </div>
           <div class="flex2">
             <div>
-              <button>添加 <i class="iconfont icon-xiangyou"></i></button>
+              <button @click="add">添加 <i class="iconfont icon-xiangyou"></i></button>
             </div>
             <div>
-              <button><i class="iconfont icon-arrow-left"></i> 移除</button>
+              <button @click="removeAdd"><i class="iconfont icon-arrow-left"></i> 移除</button>
             </div>
           </div>
           <div class="flex1">
             <p>添加人员</p>
             <div class="flex1Header">
               <div class="inputRow">
-                <button class="add">添加号码</button>
+                <button class="add" @click="addPhone">添加号码</button>
                 <div class="input">
                   <i class="iconfont icon-search_icon"></i>
-                  <input type="text" placeholder="输入手机号">
+                  <input type="text" v-model="phoneV" placeholder="输入手机号">
                 </div>
-                <button class="sendM">发送消息</button>
+                <button class="sendM" @click="sendM">发送消息</button>
               </div>
             </div>
             <div class="flex1Table">
               <el-table class="leftBox"
-                        ref="singleTable"
-                        :data="tableData"
                         border
-                        highlight-current-row
-                        @current-change="handleCurrentChange"
+                        ref="multipleTable"
+                        :data="selectPData"
+                        tooltip-effect="dark"
                         height="100%"
-                        style="width: 100%">
-
+                        style="width: 100%"
+                        @selection-change="removeSelectionChange">
                 <el-table-column
-                  property="title"
-                  label="标题">
+                  type="selection"
+                  width="55">
                 </el-table-column>
                 <el-table-column
-                  property="date"
-                  label="发布日期">
+                  label="部门">
+                  <template slot-scope="scope">{{ scope.row.department }}</template>
+                </el-table-column>
+                <el-table-column
+                  prop="typeName"
+                  label="岗位">
+                </el-table-column>
+                <el-table-column
+                  prop="username"
+                  label="姓名"
+                  show-overflow-tooltip>
+                </el-table-column>
+                <el-table-column
+                  prop="phone"
+                  label="手机号"
+                  show-overflow-tooltip>
                 </el-table-column>
               </el-table>
             </div>
             <div class="flex1Message">
               <p>消息</p>
               <span>{{textV.length}}/{{textVCount}}</span>
-              <textarea name="" id="" v-model="textV" :maxlength="textVCount" @input="textValue">
+              <textarea name="" id="" v-model="textV" :maxlength="textVCount">
               </textarea>
             </div>
-
           </div>
         </div>
       </div>
@@ -193,7 +218,7 @@
     box-sizing: border-box;
     padding:20px;
     background-color: white;
-    position:relative;
+    /*position:relative;*/
   }
   .rightView {
     width:100%;

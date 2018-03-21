@@ -18,9 +18,18 @@ Vue.use(ElementUI);
 Object.defineProperty(Vue.prototype, '$elU', { value: ElementUI });
 import '@/assets/font/iconfont.css'
 
+
+//引入VueQuillEditor
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+Vue.use(VueQuillEditor)
+
 // 引入axios
 import axiosConfig from './server/axiosConfig.js'
-Object.defineProperty(Vue.prototype,'$axios',{value:axiosConfig});
+Object.defineProperty(Vue.prototype,'$axios',{value:axiosConfig.axiosConfig});
+Object.defineProperty(Vue.prototype,'$baseU',{value:axiosConfig.baseU});
 
 // 封装方法axios的get以及post
 import  Server from './server/server.js'

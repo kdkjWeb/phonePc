@@ -43,9 +43,23 @@ export default {
           });
           break;
         case 3:
-          this.$router.push({
-            path:"/"
+          this.$g({
+            url:"logout",
+            params:{},
+            callback:(res)=>{
+              this.$message({
+                message: '退出成功',
+                type: 'success',
+                duration:1500
+              });
+              setTimeout(()=>{
+                this.$router.push({
+                  path:"/"
+                });
+              },1500);
+            }
           });
+
           break;
       }
 

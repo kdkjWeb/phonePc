@@ -18,7 +18,7 @@
           label="部门">
         </el-table-column>
         <el-table-column
-          property="type"
+          property="typeName"
           label="岗位">
         </el-table-column>
         <el-table-column
@@ -49,7 +49,7 @@
             <el-form ref="form" label-width="55px">
                 <el-form-item label="部门" size="small">
                     <el-select v-model="form.departmentV" :disabled="disable" placeholder="请选择部门" class="input">
-                        <el-option v-for="item in form.department" :key="item.departId" :label="item.departName" :value="item.departId">
+                        <el-option v-for="item,index in form.department" :key="index" :label="item.departName" :value="item.departName">
                         </el-option>
                     </el-select>
                 </el-form-item>
@@ -68,7 +68,7 @@
                 <el-form-item class="groupB">
                     <el-button type="primary" size="small" class="btn1" @click="add">新增</el-button>
                     <el-button size="small" class="btn1" @click="save">保存</el-button>
-                    <el-button type="warning" size="small" class="btn1" @click="">重置密码</el-button>
+                    <el-button type="warning" size="small" class="btn1" @click="rePwd">重置密码</el-button>
                 </el-form-item>
             </el-form>
        </div>
@@ -89,7 +89,7 @@
                         <el-input type="password" v-model="form.successPas"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" size="small" class="btn" @click="save1">保存</el-button>
+                        <el-button type="primary" size="small" class="btn" @click="adminUpPwd">保存</el-button>
                     </el-form-item>
               </el-form>
           </div>

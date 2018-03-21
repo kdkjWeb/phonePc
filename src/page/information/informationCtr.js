@@ -12,16 +12,17 @@ export default{
               },{
                 label:"部门管理员",
                 value:1
-              },{
-                label:"管理员",
-                value:2
-              }],
+              }
+              // ,{
+              //   label:"管理员",
+              //   value:2
+              // }
+              ],
               personDetail:'',
               departmentV: '',
               typeV:'',
               name: '',
               phone: '',
-              password: '',
               oldPas: '',
               newPas: '',
               successPas: ''
@@ -37,12 +38,14 @@ export default{
        */
       handleCurrentChange(val){
         this.personDetail = val;
+        console.log(val);
         var p = this.personDetail;
         this.form['departmentV'] = p.department;
         this.form['typeV'] = p.type;
         this.form['name'] = p.username;
         this.form['phone'] = p.phone;
         this.disable = true;
+        this.userid = p.id;
       },
       typeF(val) {
         switch(val){
@@ -69,7 +72,7 @@ export default{
        * 获取列表
        */
       list(){
-        this.$g({
+        this.$p({
           url:"user/selectMyUser",
           params:{
             pageNum:this.currentPage
@@ -80,7 +83,7 @@ export default{
             this.tableData = res.data.list;
             var d = this.tableData;
             d.forEach((e,index)=>{
-              d[index].type = this.typeF(e.type);
+              d[index].typeName = this.typeF(e.type);
             });
             this.tableData = d;
           }
@@ -104,7 +107,6 @@ export default{
       modify(){
         var p = this.personDetail;
         if(p) {
-          this.userid = p.id;
           this.disable = false;
         }else {
           this.$message({
@@ -129,6 +131,15 @@ export default{
        * 用户信息保存按钮
        */
       save(){
+        console.log(this.form['departmentV'],this.form['name'],this.form['typeV'],this.form['phone'])
+        if(this.form['departmentV']===''||this.form['name']===''||this.form['typeV']===""||this.form['phone'] ==="") {
+          this.$message({
+            message: '请填写完整信息',
+            type: 'warning',
+            duration:1500
+          });
+          return;
+        }
         var urls = "";
         if(this.userid) {
           urls = "user/updateUser"
@@ -158,23 +169,20 @@ export default{
                 duration:1500
               });
             }
+            this.list();
           }
         });
       },
-        //修改密码的保存按钮
-        save1(){
-            console.log('保存1')
-        },
       /**
        * 删除用户
        */
       remove(){
         var u = this.userid;
         if(u) {
-          this.$p({
-            url:'User/deletUser',
+          this.$g({
+            url:'user/deletUser',
             params:{
-              id:u
+              userid:u
             },
             callback:(res)=>{
               this.$message({
@@ -182,6 +190,7 @@ export default{
               type: 'success',
               duration:1500
             });
+              this.list();
             }
           });
         }else {
@@ -191,6 +200,72 @@ export default{
             duration:1500
           });
         }
+      },
+      /**
+       * 重置密码
+       */
+      rePwd(){
+        var u = this.userid;
+        if(u) {
+          this.$g({
+            url:'user/resetPwd',
+            params:{
+              id:u
+            },
+            callback:(res)=>{
+              this.$message({
+                message: '重置成功',
+                type: 'success',
+                duration:1500
+              });
+            }
+          });
+        }else {
+          this.$message({
+            message: '请选择要重置的用户',
+            type: 'warning',
+            duration:1500
+          });
+        }
+      },
+      /**
+       * 管理员修改密码
+       */
+      adminUpPwd(){
+        var old = this.form.oldPas;
+        var newP = this.form.newPas;
+        var sucP = this.form.successPas;
+
+        if(old === "" ||newP ==="" || sucP === "") {
+          this.$message({
+            message: '请输入完整密码信息',
+            type: 'warning',
+            duration:1500
+          });
+          return;
+        }
+        if(newP != sucP) {
+          this.$message({
+            message: '确认密码与新密码不相同',
+            type: 'warning',
+            duration:1500
+          });
+          return;
+        }
+        this.$g({
+          url:'user/updatePwd',
+          params:{
+            newpwd:newP,
+            pwd:old
+          },
+          callback:(res)=>{
+            this.$message({
+              message: '修改管理员密码成功',
+              type: 'success',
+              duration:1500
+            });
+          }
+        });
       }
     },
   mounted(){

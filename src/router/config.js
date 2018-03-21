@@ -9,6 +9,7 @@ import history from '@/page/history/history'
 import newCreate from '@/page/newCreate/newCreate'
 import information from '@/page/information/information'
 import showDoc from '@/page/showDoc/showDoc'
+import editor from '@/page/editor/editor'
 
 export default [
   {
@@ -34,7 +35,13 @@ export default [
           path:'/newCreate',
           name:'newCreate',
           component:newCreate
-        }]
+        },
+          {
+            path: '/editor',
+            name: 'editor',
+            component: editor
+          }
+        ]
       },{
         path: '/history',
         name: 'history',

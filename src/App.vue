@@ -16,7 +16,7 @@ export default {
     height:100%;
     font-size:14px;
     font-family: "Microsoft Yahei";
-    min-width: 1366px;
+    min-width: 1200px;
   }
   *{
     padding:0;

@@ -8,6 +8,7 @@ import doc from '@/page/doc/doc'
 import history from '@/page/history/history'
 import newCreate from '@/page/newCreate/newCreate'
 import information from '@/page/information/information'
+import department from '@/page/department/department'
 import showDoc from '@/page/showDoc/showDoc'
 import editor from '@/page/editor/editor'
 
@@ -50,6 +51,10 @@ export default [
         path: '/information',
         name: 'information',
         component: information
+      },{
+        path: '/department',
+        name: 'department',
+        component: department
       }
     ]
   }

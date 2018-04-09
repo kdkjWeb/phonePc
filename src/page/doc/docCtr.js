@@ -48,6 +48,14 @@ export default {
      * 跳转新建页面
      */
     newCreate(){
+      if(localStorage.type == 0) {
+        this.$message({
+          message: '你没有权限新建消息',
+          type: 'error',
+          duration:1500
+        });
+        return ;
+      }
       this.$refs.singleTable.setCurrentRow("");
       this.$router.push({
         path:'/newCreate'
@@ -74,6 +82,14 @@ export default {
      * 删除文件列表
      */
     remove(){
+      if(localStorage.type == 0) {
+        this.$message({
+          message: '你没有权限删除消息',
+          type: 'error',
+          duration:1500
+        });
+        return ;
+      }
       var id = this.detail.id;
       if(id) {
         this.$g({
@@ -162,7 +178,8 @@ export default {
 
     },
     sendM(){
-      var arr = this.selectPData;
+      var arr = JSON.parse(JSON.stringify(this.selectPData));
+      this.sendArr = [];
       arr.forEach((e,index)=>{
         if(e.id) {
           this.sendArr.push(e.id);
@@ -198,7 +215,6 @@ export default {
             type: 'success',
             duration:1500
           });
-          this.sendArr = [];
         }
       });
       console.log(this.sendArr);
@@ -264,7 +280,9 @@ export default {
           break;
         case 2:
           return "管理员";
-        break;
+        case 4:
+          return "外部人员";
+          break;
       }
     },
     /**
@@ -290,8 +308,17 @@ export default {
 
     }
   },
-
+  computed: {
+    listen() {
+      return this.$store.state.reload;
+    }
+  },
+  watch: {
+    listen: function(a, b) {
+      this.$router.go(0);
+    }
+  },
   mounted() {
     this.list();
-  },
+  }
 }

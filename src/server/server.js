@@ -40,10 +40,10 @@ export default {
           callback(res.data);
         }
       }else {
-        Vue.prototype.$mint.Toast({
-          message:res.data.msg,
-          position: 'bottom',
-          duration: 2000
+        Vue.prototype.$message({
+          message: res.data.msg,
+          type: 'error',
+          duration:1500
         });
       }
     },function(errRes) {
@@ -51,7 +51,11 @@ export default {
         Vue.prototype.$mint.Indicator.close();
       }
       console.log(errRes);
-      Vue.prototype.$mint.Toast("网络可能出错了，请刷新后重试！");
+      Vue.prototype.$message({
+        message: "网络可能出错了，请稍后再试",
+        type: 'error',
+        duration:1500
+      });
     })
   },
   p:({url,params,callback,load})=>{
@@ -76,10 +80,10 @@ export default {
           callback(res.data);
         }
       }else {
-        Vue.prototype.$mint.Toast({
-          message:res.data.msg,
-          position: 'bottom',
-          duration: 2000
+        Vue.prototype.$message({
+          message: res.data.msg,
+          type: 'error',
+          duration:1500
         });
       }
     },function(errRes) {
@@ -87,7 +91,11 @@ export default {
         Vue.prototype.$mint.Indicator.close();
       }
       console.log(errRes);
-      Vue.prototype.$mint.Toast("网络可能出错了，请刷新后重试！");
+      Vue.prototype.$message({
+        message: "网络可能出错了，请稍后再试",
+        type: 'error',
+        duration:1500
+      });
     })
   }
 }

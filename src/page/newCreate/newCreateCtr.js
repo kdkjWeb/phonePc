@@ -106,7 +106,7 @@ export default {
         });
         return ;
       }
-      this.selectPData = this.selectPD;
+      this.selectPData = JSON.parse(JSON.stringify(this.selectPD));
     },
     sendM(){
       var arr = this.selectPData;
@@ -141,6 +141,13 @@ export default {
             type: 'success',
             duration:1500
           });
+          this.$store.state.reload = Math.random();
+          setTimeout(()=>{
+            this.$router.push({
+              path:"/doc"
+            });
+          },1000);
+
         }
       });
     },
@@ -204,6 +211,8 @@ export default {
           break;
         case 2:
           return "管理员";
+        case 4:
+          return "外部人员";
           break;
       }
     },

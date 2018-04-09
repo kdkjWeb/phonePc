@@ -6,5 +6,5 @@ import Vuex from 'vuex'
 import stores from './config.js'
 Vue.use(Vuex);
 
-const store = new Vuex.Store(stores);
-export default store;
+const storeM = new Vuex.Store(stores);
+export default storeM;

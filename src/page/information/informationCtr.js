@@ -3,6 +3,8 @@ export default{
         return {
           currentPage:1,
           userid:null,
+          radio:"department",
+          searchV:"",
           disable:false,
             form:{
               department:[],
@@ -37,8 +39,19 @@ export default{
        * 获取当前这条数据的内容
        */
       handleCurrentChange(val){
-        this.personDetail = val;
+
         console.log(val);
+        this.personDetail = val;
+        if(val==null) {
+          this.form['departmentV'] = "";
+          this.form['typeV'] = "";
+          this.form['name'] = "";
+          this.form['phone'] = "";
+          this.disable = false;
+          this.userid = null;
+          return ;
+        }
+
         var p = this.personDetail;
         this.form['departmentV'] = p.department;
         this.form['typeV'] = p.type;
@@ -57,6 +70,8 @@ export default{
           break;
           case 2:
             return "管理员";
+          case 4:
+            return "外部人员";
           break;
         }
       },
@@ -67,6 +82,36 @@ export default{
       changeCurrentChange(val) {
         this.currentPage = val;
         this.list();
+      },
+      /**
+       * 查询
+       */
+      search(){
+        // if(this.searchV == "") {
+        //   this.$message({
+        //     message: '请输入要查询的内容',
+        //     type: 'warning',
+        //     duration:1500
+        //   });
+        //   return ;
+        // }
+        let m;
+        m = this.radio;
+        this.$p({
+          url:"user/selectMyUser",
+          params:{
+            pageNum:0,
+            [m]:this.searchV
+          },
+          callback:(res)=>{
+            this.allPData = res.data.list;
+            var d = this.allPData;
+            d.forEach((e,index)=>{
+              d[index].typeName = this.typeF(e.type);
+            });
+            this.tableData = d;
+          }
+        });
       },
       /**
        * 获取列表
@@ -93,7 +138,7 @@ export default{
        * 获取部门列表
        */
       depList(){
-        this.$g({
+        this.$p({
           url:"dep/selectDep",
           params:{},
           callback:(res)=>{
@@ -135,6 +180,15 @@ export default{
         if(this.form['departmentV']===''||this.form['name']===''||this.form['typeV']==="") {
           this.$message({
             message: '请填写完整信息',
+            type: 'warning',
+            duration:1500
+          });
+          return;
+        }
+        var reg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+        if(!reg.test(this.form['phone'])) {
+          this.$message({
+            message: '请输入正确的手机号',
             type: 'warning',
             duration:1500
           });
@@ -182,11 +236,13 @@ export default{
        */
       remove(){
         var u = this.userid;
+
         if(u) {
           this.$g({
             url:'user/deletUser',
             params:{
-              userid:u
+              userid:u,
+              department:this.personDetail.department
             },
             callback:(res)=>{
               this.$message({
@@ -211,19 +267,28 @@ export default{
       rePwd(){
         var u = this.userid;
         if(u) {
-          this.$g({
-            url:'user/resetPwd',
-            params:{
-              id:u
-            },
-            callback:(res)=>{
-              this.$message({
-                message: '重置成功',
-                type: 'success',
-                duration:1500
-              });
-            }
+          this.$confirm('是否重置密码,重置后密码为111111?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            this.$g({
+              url:'user/resetPwd',
+              params:{
+                id:u
+              },
+              callback:(res)=>{
+                this.$message({
+                  message: '重置成功',
+                  type: 'success',
+                  duration:1500
+                });
+              }
+            });
+          }).catch(() => {
+
           });
+
         }else {
           this.$message({
             message: '请选择要重置的用户',

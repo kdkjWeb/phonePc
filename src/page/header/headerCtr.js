@@ -14,6 +14,10 @@ export default {
           icon:"icon-guanliyuan-copy"
         },
         {
+          text:"部门管理",
+          icon:"icon-bumenguanli"
+        },
+        {
           text:"消息历史",
           icon:"icon-lishihangcheng-copy"
         },
@@ -46,11 +50,24 @@ export default {
           });
           break;
         case 2:
+          if(localStorage.type != 2) {
+            this.$message({
+              message: '你没有该权限',
+              type: 'error',
+              duration:1500
+            });
+            break;
+          }
+          this.$router.push({
+            path:"/department"
+          });
+          break;
+        case 3:
           this.$router.push({
             path:"/history"
           });
           break;
-        case 3:
+        case 4:
           this.$g({
             url:"logout",
             params:{},
@@ -72,5 +89,16 @@ export default {
       }
 
     }
+  },
+  mounted(){
+    if(this.$route.path == "/information"){
+      this.thisIndex = 1;
+    }else if(this.$route.path == "/history"){
+      this.thisIndex = 3;
+    }else if(this.$route.path == '/department'){
+      this.thisIndex = 2;
+    }else {
+      this.thisIndex = 0;
+    };
   }
 }

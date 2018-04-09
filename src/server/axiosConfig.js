@@ -3,7 +3,8 @@
  */
 import Vue from 'vue'
 import Axios from 'axios';
-var baseU = 'http://192.168.20.3:8886/';
+// var baseU = 'http://192.168.20.3:8886/';
+var baseU = 'http://101.207.139.80:8887/';
 var axiosConfig = Axios.create({
   baseURL: baseU,    //zxc
   timeout: 3000, //所有请求30s后过期

@@ -20,7 +20,7 @@
         </el-table-column>
         <el-table-column
           property="pubTime"
-          width="200px"
+          width="120px"
           label="发布日期">
         </el-table-column>
       </el-table>
@@ -90,6 +90,7 @@
                 <el-table-column
                 prop="phone"
                 label="手机号"
+                width="120px"
                 show-overflow-tooltip>
               </el-table-column>
               </el-table>
@@ -145,14 +146,15 @@
                 <el-table-column
                   prop="phone"
                   label="手机号"
+                  width="120px"
                   show-overflow-tooltip>
                 </el-table-column>
               </el-table>
             </div>
             <div class="flex1Message">
               <p>消息</p>
-              <span>{{textV.length}}/{{textVCount}}</span>
-              <textarea name="" id="" v-model="textV" :maxlength="textVCount">
+              <!--<span>{{textV.length}}/{{textVCount}}</span>-->
+              <textarea name="" id="" v-model="textV">
               </textarea>
             </div>
           </div>
@@ -166,7 +168,7 @@
 </script>
 <style scoped>
   .left {
-    flex: 6;
+    flex: 3;
     height:100%;
     margin-right:20px;
     box-sizing: border-box;
@@ -182,7 +184,7 @@
     justify-content: space-between;
   }
   .btnGroup button {
-    width:100px;
+    width:80px;
     height:35px;
     color:white;
     text-align: center;
@@ -410,5 +412,8 @@
     font-size:14px;
     bottom:0px;
     right:16px;
+  }
+  .el-table {
+    cursor: pointer;
   }
 </style>
